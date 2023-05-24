@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Registro de personas</title>
+    <link rel="stylesheet" type="text/css" href="estilosFormularioEdad.css">
+
+  </head>
+  <body>
+    <h1>Registro de personas</h1>
+    <form>
+      <label for="nombre">Nombre:</label>
+      <input type="text" name="nombre" id="nombre" placeholder="Ingrese solo su nombre" required pattern="[A-Za-z]{2,50}"><br><br>
+      <label for="ap-paterno">Apellido Paterno:</label>
+      <input type="text" name="ap-paterno" id="ap-paterno" placeholder="Ingrese su primer apellido" required pattern="[A-Za-z]{2,50}"><br><br>
+    
+      <label for="ap-materno">Apellido Materno:</label>
+      <input type="text" name="ap-materno" id="ap-materno" placeholder="Ingrese su segundo apellido" required pattern="[A-Za-z]{2,50}"><br><br>
+    
+      <label for="edad">Edad:</label>
+      <input type="number" name="edad" id="edad" required min="0" max="150" ><br><br>
+    
+      <label for="fecha-nac">Fecha de nacimiento:</label>
+      <input type="date" name="fecha-nac" id="fecha-nac" required><br><br>
+    
+      <button type="button" onclick="calcular()">Calcular</button>
+    </form>
+    
+    <div id="resultado"></div>
+    
+    <script>
+      function calcular() {
+        let nombre = document.getElementById('nombre').value;
+        let ap_paterno = document.getElementById('ap-paterno').value;
+        let ap_materno = document.getElementById('ap-materno').value;
+        let edad = document.getElementById('edad').value;
+        let fecha_nac = new Date(document.getElementById('fecha-nac').value);
+    
+        // Calculo de la edad en 25 años
+        let edad_25 = parseInt(edad) + 25;
+    
+        // Calculo de dias faltantes para el proximo cumpleaños
+        let hoy = new Date();
+        let cumpleanos = new Date(hoy.getFullYear(), fecha_nac.getMonth(), fecha_nac.getDate());
+        if (hoy > cumpleanos) {
+          cumpleanos.setFullYear(cumpleanos.getFullYear() + 1);
+        }
+        let dias_faltantes = Math.ceil((cumpleanos - hoy) / (1000 * 60 * 60 * 24));
+    
+        // Calculo de horas faltantes para el proximo cumpleaños
+        let horas_faltantes = dias_faltantes * 24;
+    
+        // Mostrar resultados en el div resultado
+        document.getElementById('resultado').innerHTML = `
+          <p>Nombre completo: ${nombre} ${ap_paterno} ${ap_materno}</p>
+          <p>Edad en 25 años: ${edad_25}</p>
+          <p>Días faltantes para el próximo cumpleaños: ${dias_faltantes}</p>
+          <p>Horas faltantes para el próximo cumpleaños: ${horas_faltantes}</p>
+        `;
+      }
+    </script>
+  </body>
+</html>    
